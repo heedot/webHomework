@@ -22,8 +22,8 @@
         </tr>
         <tr>
             <td colspan="10" align="center">
-                <input checked type="radio" name="choose" value="用户"> 用户
-                <input type="radio" name="choose" value="商家"> 商家
+                <input checked type="radio" name="choose" value="customer"> 用户
+                <input type="radio" name="choose" value="shop"> 商家
             </td>
         </tr>
         <tr>
