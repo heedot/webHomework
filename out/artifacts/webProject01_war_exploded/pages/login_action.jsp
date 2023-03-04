@@ -34,14 +34,13 @@
   public String check(String userName, String passwd) throws ClassNotFoundException {
     Connection connection = null;
     Statement statement = null;
-    System.out.println("ok1");
     try {
       Class.forName(JDBC_DRIVER);
-      System.out.println("正在连接数据库...");
+//      System.out.println("正在连接数据库...");
 
       connection = DriverManager.getConnection(DB_URL, User, pwd);
 
-      System.out.println("实例化Statement对象...");
+//      System.out.println("实例化Statement对象...");
       statement = connection.createStatement();
       String sql = "SELECT username, passwd, mail FROM user";
       ResultSet res = statement.executeQuery(sql);
@@ -64,7 +63,7 @@
       statement.close();
       connection.close();
       if(find) {
-        System.out.println("找到目标");
+//        System.out.println("找到目标");
         return string;
       }
 

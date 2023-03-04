@@ -14,10 +14,10 @@
   System.out.println(passwd);
   System.out.println(choose);
   try {
-    if(check(username, passwd) != null) {
-      response.sendRedirect("welcome.jsp");
+    if(tryAdd(username, passwd, email, choose)) {
+      response.sendRedirect("register_success.jsp");
     } else {
-      response.sendRedirect("login_failed.jsp");
+      response.sendRedirect("register_failed.jsp");
     }
   } catch (ClassNotFoundException e) {
     throw new RuntimeException(e);
@@ -34,7 +34,8 @@
           "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC";
   static final String User = "root";
   static final String pwd = "password";
-  public String check(String userName, String passwd) throws ClassNotFoundException {
+
+  public boolean tryAdd(String userName, String passwd, String email, String choose) throws ClassNotFoundException {
     Connection connection = null;
     Statement statement = null;
     System.out.println("ok1");
@@ -46,36 +47,16 @@
 
       System.out.println("实例化Statement对象...");
       statement = connection.createStatement();
-      String sql = "SELECT username, passwd, mail FROM user";
-      ResultSet res = statement.executeQuery(sql);
-
-      boolean find = false;
-      String string = null;
-      while(res.next()) {
-        String _name = res.getString("username");
-        String _password = res.getString("passwd");
-        String _mail = res.getString("mail");
-
-        if(_name.equals(userName) && _password.equals(passwd)) {
-          find = true;
-          string = _mail;
-          break;
-        }
-      }
-
-      res.close();
+      String sql = "insert into user(username, mail, passwd, leixing);\n" +
+              "values (\"" + userName + "\", \"" +
+              email + "\", \" " + passwd + "\", '" + choose +"');";
+      statement.executeUpdate(sql);
       statement.close();
       connection.close();
-      if(find) {
-        System.out.println("找到目标");
-        return string;
-      }
-
-      return null;
+      return true;
 
     } catch (SQLException e) {
       throw new RuntimeException(e);
     }
-
   }
 %>
